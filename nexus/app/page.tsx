@@ -1,19 +1,18 @@
 // file: app/page.tsx
 
 import HeroSection from "@/components/HeroSection";
-import PlayerDemo from "@/components/PlayerDemo"; // 1. Impor komponen PlayerDemo
+import PlayerDemo from "@/components/PlayerDemo";
+import DocsSection from "@/components/DocsSection"; // 1. Impor DocsSection
 
 export default function Home() {
   return (
     <main role="main">
       <HeroSection />
-      <PlayerDemo /> {/* 2. Tambahkan komponen PlayerDemo di sini */}
+      <PlayerDemo />
+      <DocsSection /> {/* 2. Tambahkan DocsSection di sini */}
       
-      {/* 
-        Kita bisa hapus div kosong ini sekarang karena PlayerDemo sudah ada.
-        Tetapi, biarkan dulu untuk memberi ruang bagi bagian Docs & Faqs nanti.
-      */}
-      <div className="h-screen bg-black"></div>
+      {/* Placeholder untuk bagian Faqs nanti */}
+      <div id="faqs" className="h-screen bg-black"></div>
     </main>
   );
 }
