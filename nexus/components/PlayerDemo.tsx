@@ -29,11 +29,11 @@ const PlayerDemo = () => {
   const [settingIcon, setSettingIcon] = useState(true);
   const [pipIcon, setPipIcon] = useState(true);
   const [watchparty, setWatchparty] = useState(false);
-  const [progress, setProgress] = useState(''); // State baru untuk Progress
+  const [progress, setProgress] = useState('');
   const [primaryColor, setPrimaryColor] = useState('#6C63FF');
   const [secondaryColor, setSecondaryColor] = useState('#9F9BFF');
   const [iconColor, setIconColor] = useState('#FFFFFF');
-  const [logoUrl, setLogoUrl] = useState('https://i.ibb.co/67wTJd9R/pngimg-com-netflix-PNG11.png');
+  // const [logoUrl, setLogoUrl] = useState(...) // --> DIHAPUS
 
   // State untuk URL dan UI
   const [generatedUrl, setGeneratedUrl] = useState('');
@@ -73,16 +73,16 @@ const PlayerDemo = () => {
     params.append('primarycolor', primaryColor.substring(1));
     params.append('secondarycolor', secondaryColor.substring(1));
     params.append('iconcolor', iconColor.substring(1));
-    if (logoUrl) params.append('logourl', logoUrl);
-    if (progress) params.append('progress', progress); // Tambahkan parameter progress jika ada isinya
+    // if (logoUrl) params.append('logourl', logoUrl); // --> DIHAPUS
+    if (progress) params.append('progress', progress);
     
     setGeneratedUrl(`${domain}${path}?${params.toString()}`);
 
   }, [
     isClient, domain, activeTab, mediaId, season, episode, isDub,
     autoplay, autoNext, showNextButton, showPoster, showTitle, download, chromecast,
-    episodeList, serverIcon, settingIcon, pipIcon, watchparty, progress, // Tambahkan progress ke dependency array
-    primaryColor, secondaryColor, iconColor, logoUrl
+    episodeList, serverIcon, settingIcon, pipIcon, watchparty, progress,
+    primaryColor, secondaryColor, iconColor // logoUrl DIHAPUS DARI DEPENDENCY
   ]);
 
   const handleCopy = () => { if (generatedUrl) { navigator.clipboard.writeText(generatedUrl); setCopied(true); setTimeout(() => setCopied(false), 2000); }};
@@ -185,11 +185,7 @@ const PlayerDemo = () => {
                   <SettingsToggle label="PIP Icon" description="Show Picture-in-Picture icon" icon={<PictureInPicture className="w-4 h-4 text-emerald-400" />} checked={pipIcon} onCheckedChange={setPipIcon} colorClass='bg-emerald-500' />
                   <SettingsToggle label="Watch Party" description="Enable Watch Party features" icon={<Star className="w-4 h-4 text-pink-400" />} checked={watchparty} onCheckedChange={setWatchparty} colorClass='bg-pink-500' />
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-sm font-medium text-zinc-300">Custom Logo URL</label>
-                  <input type="url" placeholder="Enter logo URL" value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} className="input-style !text-left !text-sm" />
-                </div>
-                {/* Input untuk Progress ditambahkan di sini */}
+                {/* Bagian Input Logo URL DIHAPUS DARI SINI */}
                 <div className="flex items-center justify-between p-2.5 bg-zinc-800/30 rounded-lg border border-zinc-700/30">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                         <div className="w-7 h-7 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
