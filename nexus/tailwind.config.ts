@@ -1,8 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  // 1. AKTIFKAN MODE GELAP BERBASIS CLASS
-  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -17,6 +15,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'), // Tambahkan plugin ini
+  ],
 };
 export default config;
