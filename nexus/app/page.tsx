@@ -3,7 +3,7 @@
 import HeroSection from "@/components/HeroSection";
 import PlayerDemo from "@/components/PlayerDemo";
 import DocsSection from "@/components/DocsSection";
-import FaqSection from "@/components/FaqSection"; // 1. Impor FaqSection
+import FaqSection from "@/components/FaqSection";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <HeroSection />
       <PlayerDemo />
       <DocsSection />
-      <FaqSection /> {/* 2. Tambahkan FaqSection di sini */}
+      <FaqSection />
     </main>
   );
 }
