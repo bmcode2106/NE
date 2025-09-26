@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import { SettingsToggle } from './SettingsToggle';
 import { ColorPicker } from './ColorPicker';
-import { Film, Tv, Book, Copy, Check, Play, Zap, ChevronsRight, Tv2, Indent, Download, Cast, ListVideo, Server, Settings, PictureInPicture, Star } from 'lucide-react';
+import { Film, Tv, Book, Copy, Check, Play, Zap, ChevronsRight, Tv2, Indent, Download, Cast, ListVideo, Server, Settings, PictureInPicture, Star, Timer } from 'lucide-react';
 
 type ContentType = 'movie' | 'tv' | 'anime';
 
@@ -29,6 +29,7 @@ const PlayerDemo = () => {
   const [settingIcon, setSettingIcon] = useState(true);
   const [pipIcon, setPipIcon] = useState(true);
   const [watchparty, setWatchparty] = useState(false);
+  const [progress, setProgress] = useState(''); // State baru untuk Progress
   const [primaryColor, setPrimaryColor] = useState('#6C63FF');
   const [secondaryColor, setSecondaryColor] = useState('#9F9BFF');
   const [iconColor, setIconColor] = useState('#FFFFFF');
@@ -73,13 +74,14 @@ const PlayerDemo = () => {
     params.append('secondarycolor', secondaryColor.substring(1));
     params.append('iconcolor', iconColor.substring(1));
     if (logoUrl) params.append('logourl', logoUrl);
+    if (progress) params.append('progress', progress); // Tambahkan parameter progress jika ada isinya
     
     setGeneratedUrl(`${domain}${path}?${params.toString()}`);
 
   }, [
     isClient, domain, activeTab, mediaId, season, episode, isDub,
     autoplay, autoNext, showNextButton, showPoster, showTitle, download, chromecast,
-    episodeList, serverIcon, settingIcon, pipIcon, watchparty,
+    episodeList, serverIcon, settingIcon, pipIcon, watchparty, progress, // Tambahkan progress ke dependency array
     primaryColor, secondaryColor, iconColor, logoUrl
   ]);
 
@@ -92,7 +94,6 @@ const PlayerDemo = () => {
     else if (tab === 'anime') setMediaId('21');
   };
   
-  // renderInputs sekarang menjadi fungsi biasa di dalam komponen
   const renderInputs = () => {
     switch (activeTab) {
       case 'movie':
@@ -141,7 +142,6 @@ const PlayerDemo = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Kolom Kiri: Preview Player */}
           <div className="lg:col-span-8">
             <div className="bg-zinc-900 rounded-lg p-4 sm:p-6 mb-8 border border-zinc-800">
               <div className="flex justify-center mb-6"><div className="bg-zinc-800 rounded-lg p-1 flex gap-1">
@@ -166,7 +166,6 @@ const PlayerDemo = () => {
             </div>
           </div>
           
-          {/* Kolom Kanan: Player Settings */}
           <div className="lg:col-span-4">
             <div className="bg-gradient-to-br from-zinc-900/80 to-zinc-900/50 rounded-2xl border border-zinc-700/50 shadow-2xl overflow-hidden">
               <div className="px-6 py-4 border-b border-zinc-700/50"><h3 className="text-xl font-semibold text-white">Player Settings</h3></div>
@@ -186,10 +185,29 @@ const PlayerDemo = () => {
                   <SettingsToggle label="PIP Icon" description="Show Picture-in-Picture icon" icon={<PictureInPicture className="w-4 h-4 text-emerald-400" />} checked={pipIcon} onCheckedChange={setPipIcon} colorClass='bg-emerald-500' />
                   <SettingsToggle label="Watch Party" description="Enable Watch Party features" icon={<Star className="w-4 h-4 text-pink-400" />} checked={watchparty} onCheckedChange={setWatchparty} colorClass='bg-pink-500' />
                 </div>
-                 <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium text-zinc-300">Custom Logo URL</label>
-                    <input type="url" placeholder="Enter logo URL" value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} className="input-style !text-left !text-sm" />
-                  </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-zinc-300">Custom Logo URL</label>
+                  <input type="url" placeholder="Enter logo URL" value={logoUrl} onChange={(e) => setLogoUrl(e.target.value)} className="input-style !text-left !text-sm" />
+                </div>
+                {/* Input untuk Progress ditambahkan di sini */}
+                <div className="flex items-center justify-between p-2.5 bg-zinc-800/30 rounded-lg border border-zinc-700/30">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                        <div className="w-7 h-7 bg-cyan-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Timer className="w-4 h-4 text-cyan-400" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                            <label className="text-sm font-medium text-zinc-200 block truncate">Progress</label>
+                            <p className="text-xs text-zinc-500 truncate">Set start time in seconds</p>
+                        </div>
+                    </div>
+                    <input
+                        type="number"
+                        placeholder="Seconds"
+                        value={progress}
+                        onChange={(e) => setProgress(e.target.value)}
+                        className="w-28 h-8 bg-zinc-700/50 border border-zinc-600/50 text-zinc-200 rounded-lg text-center text-sm focus:border-cyan-500/50 focus:ring-cyan-500/20 focus:outline-none transition-all duration-200"
+                    />
+                </div>
               </div>
             </div>
           </div>
